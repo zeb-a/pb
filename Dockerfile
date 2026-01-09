@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y curl unzip ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Download PocketBase binary
-RUN curl -L https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_linux_amd64.zip \
+RUN curl -L https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_0.35.0_linux_amd64.zip \
     -o pocketbase.zip \
     && unzip pocketbase.zip \
     && chmod +x pocketbase \
