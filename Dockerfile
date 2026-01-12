@@ -1,20 +1,20 @@
-FROM debian:bookworm-slim
+# Use a lightweight Linux base
+FROM alpine:latest
+
+# Install required packages
+RUN apk add --no-cache curl unzip bash
 
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
-RUN apt-get update && apt-get install -y curl unzip ca-certificates && rm -rf /var/lib/apt/lists/*
-
-# Download PocketBase binary
-RUN curl -L https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_0.35.0_linux_amd64.zip \
-    -o pocketbase.zip \
+# Download PocketBase
+RUN curl -L -o pocketbase.zip https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_0.35.0_linux_amd64.zip \
     && unzip pocketbase.zip \
     && chmod +x pocketbase \
     && rm pocketbase.zip
 
-# Expose Railway port
+# Expose the default port
 EXPOSE 8090
 
-# Run PocketBase on Railway's port
-CMD ["sh", "-c", "./pocketbase serve --http=0.0.0.0:${PORT:-8090}"]
+# Start PocketBase
+CMD ["./pocketbase", "serve", "--http", "0.0.0.0:8090"]
