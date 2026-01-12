@@ -1,17 +1,15 @@
 # Use a lightweight Linux base
 FROM alpine:latest
 
-# Install required packages
-RUN apk add --no-cache curl unzip bash
+# Install curl
+RUN apk add --no-cache curl bash
 
 # Set working directory
 WORKDIR /app
 
-# Download PocketBase
-RUN curl -L -o pocketbase.zip https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_0.35.0_linux_amd64.zip \
-    && unzip pocketbase.zip \
-    && chmod +x pocketbase \
-    && rm pocketbase.zip
+# Download PocketBase binary directly
+RUN curl -L -o pocketbase https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_0.35.0_linux_amd64 \
+    && chmod +x pocketbase
 
 # Expose the default port
 EXPOSE 8090
